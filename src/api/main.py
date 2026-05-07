@@ -11,11 +11,15 @@ Endpoints:
 """
 
 import logging
+import os
 import time
 import uuid
 from contextlib import asynccontextmanager
 from datetime import datetime
 from typing import Optional
+
+from dotenv import load_dotenv
+load_dotenv()  # Load .env before anything else
 
 import structlog
 from fastapi import FastAPI, HTTPException, Request, status

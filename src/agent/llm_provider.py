@@ -86,28 +86,20 @@ def get_llm_model(
 
 def get_default_llm(temperature: float = 0.7) -> BaseLanguageModel:
     """
-    Get the default LLM model with fallback support.
-    
-    Tries providers in order: OpenAI → Anthropic → Gemini
-    Uses the first provider with a valid API key.
-    
+    Get the default LLM model (OpenAI only).
+
     Args:
         temperature: Model temperature for sampling
-        
+
     Returns:
         Configured language model instance
-        
+
     Raises:
-        ValueError: If no LLM provider is available
+        ValueError: If OPENAI_API_KEY is not set
     """
-    
-    for provider in [LLMProvider.OPENAI, LLMProvider.ANTHROPIC, LLMProvider.GEMINI]:
-        try:
-            return get_llm_model(provider, temperature=temperature)
-        except ValueError:
-            continue
-    
-    raise ValueError(
-        "No LLM provider available. Set one of: "
-        "OPENAI_API_KEY, ANTHROPIC_API_KEY, or GOOGLE_API_KEY"
-    )
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise ValueError(
+            "OPENAI_API_KEY is not set. Add it to your .env file."
+        )
+    return get_llm_model(LLMProvider.OPENAI, temperature=temperature)

@@ -16,8 +16,12 @@ Design decisions:
 from __future__ import annotations
 
 import json
+import os
 import uuid
 from datetime import datetime
+
+from dotenv import load_dotenv
+load_dotenv()
 from typing import Annotated, Any, Literal, Optional, TypedDict
 
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage, ToolMessage

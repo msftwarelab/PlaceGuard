@@ -619,7 +619,7 @@ def main():
             label="Place query or LLM output",
             value=st.session_state.get("query_input", ""),
             placeholder=(
-                "e.g. 'Rooftop bar with cocktails under $20'\n"
+                "e.g. 'Rooftop bar in Manhattan with craft cocktails'\n"
                 "Or paste raw LLM JSON about a place recommendation..."
             ),
             height=100,

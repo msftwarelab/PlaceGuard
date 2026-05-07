@@ -9,6 +9,29 @@
 
 ---
 
+## Screenshots
+
+<table>
+  <tr>
+    <td align="center"><b>Dashboard — Main View</b></td>
+    <td align="center"><b>Validation Result</b></td>
+  </tr>
+  <tr>
+    <td><img src="static/1.png" alt="Dashboard main view" width="100%"/></td>
+    <td><img src="static/2.png" alt="Validation result card" width="100%"/></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Reasoning Chain & Issues</b></td>
+    <td align="center"><b>Benchmark Scenarios</b></td>
+  </tr>
+  <tr>
+    <td><img src="static/3.png" alt="Reasoning chain and issues" width="100%"/></td>
+    <td><img src="static/4.png" alt="Benchmark scenarios sidebar" width="100%"/></td>
+  </tr>
+</table>
+
+---
+
 ## The Problem
 
 VOYGR's LLM recommendations sometimes suggest places that are **closed**, **mispriced**, **hallucinated**, or **outdated**. PlaceGuard is the validation layer between LLM output and end users.
@@ -54,7 +77,7 @@ cp .env.example .env
 # Set OPENAI_API_KEY in .env
 
 # 3. Run API
-make serve        # http://localhost:8000/docs
+make serve        # http://localhost:8080/docs
 
 # 4. Run Dashboard
 make dashboard    # http://localhost:8501
@@ -67,7 +90,7 @@ make dashboard    # http://localhost:8501
 ### POST /validate-place
 
 ```bash
-curl -X POST http://localhost:8000/validate-place \
+curl -X POST http://localhost:8080/validate-place \
   -H "Content-Type: application/json" \
   -d '{"query": "Rooftop bar in Gangnam under $20 cocktails", "context": {"city": "Seoul"}}'
 ```
@@ -140,14 +163,12 @@ tests/
 
 ---
 
-## Multi-LLM Support
+## LLM Provider
 
-Set whichever key you have — falls back in order: OpenAI → Anthropic → Gemini.
+PlaceGuard uses **OpenAI GPT-4o** by default.
 
 ```bash
-OPENAI_API_KEY=sk-...        # gpt-4-turbo-preview
-ANTHROPIC_API_KEY=sk-ant-... # claude-3-opus
-GOOGLE_API_KEY=...           # gemini-pro
+OPENAI_API_KEY=sk-...   # required — set in .env
 ```
 
 ---
@@ -156,7 +177,7 @@ GOOGLE_API_KEY=...           # gemini-pro
 
 ```bash
 docker-compose up --build
-# API: localhost:8000  Dashboard: localhost:8501
+# API: localhost:8080  Dashboard: localhost:8501
 ```
 
 ---

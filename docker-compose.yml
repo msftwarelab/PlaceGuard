@@ -1,0 +1,50 @@
+version: "3.9"
+
+services:
+  # ---- FastAPI Backend ----
+  api:
+    build:
+      context: .
+      target: final
+    container_name: placeguard-api
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app/src
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./src:/app/src  # Mount source for hot reload
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
+  # ---- Streamlit Dashboard ----
+  dashboard:
+    build:
+      context: .
+      target: final
+    container_name: placeguard-dashboard
+    command: >
+      streamlit run src/dashboard/app.py
+      --server.port 8501
+      --server.address 0.0.0.0
+      --theme.base dark
+    ports:
+      - "8501:8501"
+    environment:
+      - PYTHONPATH=/app/src
+      - DASHBOARD_API_BASE_URL=http://api:8000
+    volumes:
+      - ./src:/app/src
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped

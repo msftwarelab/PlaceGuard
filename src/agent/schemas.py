@@ -30,8 +30,12 @@ class PlaceQuery(BaseModel):
         json_schema_extra={
             "examples": [
                 {
-                    "query": "Rooftop bar in Gangnam under $20 cocktails",
-                    "context": {"city": "Seoul", "country": "KR"}
+                    "query": "Rooftop bar with cocktails under $20",
+                    "context": {"budget": "mid-range", "vibe": "outdoor"}
+                },
+                {
+                    "query": "Omakase sushi restaurant open Sunday evening",
+                    "context": {"price_max": 150, "requires_reservation": True}
                 }
             ]
         }

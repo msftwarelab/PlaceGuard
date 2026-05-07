@@ -39,9 +39,8 @@ from agent.schemas import (
 structlog.configure(
     processors=[
         structlog.stdlib.add_log_level,
-        structlog.stdlib.add_logger_name,
         structlog.processors.TimeStamper(fmt="iso"),
-        structlog.processors.JSONRenderer(),
+        structlog.dev.ConsoleRenderer(),
     ]
 )
 logger = structlog.get_logger("placeguard.api")

@@ -46,7 +46,7 @@ def get_llm_model(
         if not api_key:
             raise ValueError("OPENAI_API_KEY environment variable not set")
         
-        model = model_name or "gpt-4-turbo-preview"
+        model = model_name or "gpt-4o"
         return ChatOpenAI(
             model_name=model,
             api_key=api_key,

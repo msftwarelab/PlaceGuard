@@ -14,9 +14,9 @@ SRC_DIR   := src
 
 # ---- Running ----
 
-serve:			## Start the FastAPI backend (port 8000)
-	@echo "🚀 Starting PlaceGuard API on http://localhost:8000"
-	PYTHONPATH=$(SRC_DIR) uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+serve:			## Start the FastAPI server (port 8080)
+	@echo "Starting PlaceGuard API on http://localhost:8080"
+	PYTHONPATH=$(SRC_DIR) uvicorn api.main:app --host 0.0.0.0 --port 8080 --reload
 
 dashboard:		## Start the Streamlit dashboard (port 8501)
 	@echo "🎨 Starting PlaceGuard Dashboard on http://localhost:8501"
@@ -61,16 +61,16 @@ extended_tests:
 # ---- Utilities ----
 
 health:			## Check API health
-	curl -s http://localhost:8000/health | python -m json.tool
+	curl -s http://localhost:8080/health | python3 -m json.tool
 
 validate:		## Quick validation test (requires API running)
-	curl -s -X POST http://localhost:8000/validate-place \
+	curl -s -X POST http://localhost:8080/validate-place \
 		-H "Content-Type: application/json" \
-		-d '{"query": "Rooftop bar in Gangnam under $$20", "context": {"city": "Seoul"}}' \
-		| python -m json.tool
+		-d '{"query": "Rooftop bar with cocktails under $$20"}' \
+		| python3 -m json.tool
 
 benchmarks:		## Run benchmarks via API (requires API running)
-	curl -s -X POST http://localhost:8000/run-benchmark | python -m json.tool
+	curl -s -X POST http://localhost:8080/run-benchmark | python3 -m json.tool
 
 docker-build:
 	docker build -t placeguard:latest .

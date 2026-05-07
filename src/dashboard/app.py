@@ -29,7 +29,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-API_BASE_URL = "http://localhost:8000"
+API_BASE_URL = "http://localhost:8080"
 
 # ---------------------------------------------------------------------------
 # Custom CSS: dark theme + YC-level premium styling
@@ -373,7 +373,7 @@ def render_sidebar():
             "POST /validate-place\nGET  /history\nGET  /benchmarks\nPOST /run-benchmark",
             language="text",
         )
-        st.caption("Docs: [localhost:8000/docs](http://localhost:8000/docs)")
+        st.caption("Docs: [localhost:8080/docs](http://localhost:8080/docs)")
 
         st.divider()
         st.markdown("**⚡ Quick Stats**")

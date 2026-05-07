@@ -619,7 +619,7 @@ def main():
             label="Place query or LLM output",
             value=st.session_state.get("query_input", ""),
             placeholder=(
-                "Try: 'Rooftop bar in Gangnam under $20 cocktails'\n"
+                "e.g. 'Rooftop bar with cocktails under $20'\n"
                 "Or paste raw LLM JSON about a place recommendation..."
             ),
             height=100,
@@ -631,13 +631,13 @@ def main():
         context_raw = st.text_area(
             label="Context (JSON, optional)",
             value=st.session_state.get("context_input", ""),
-            placeholder='{"city": "Seoul",\n "country": "KR"}',
+            placeholder='{"budget": "mid-range",\n "vibe": "outdoor"}',
             height=100,
             label_visibility="visible",
         )
 
     validate_btn = st.button(
-        "🚀  Validate Place",
+        "Validate Place",
         type="primary",
         use_container_width=True,
     )
@@ -656,7 +656,7 @@ def main():
                     st.warning("⚠️ Context JSON is invalid — ignoring it.")
 
             # Show animated loading state
-            with st.spinner("🤖 PlaceGuard agent is validating..."):
+            with st.spinner("PlaceGuard agent is validating..."):
                 progress = st.progress(0, text="Initializing agent…")
                 time.sleep(0.3)
                 progress.progress(20, text="Searching for place…")

@@ -21,8 +21,7 @@ serve:			## Start the FastAPI backend (port 8000)
 dashboard:		## Start the Streamlit dashboard (port 8501)
 	@echo "🎨 Starting PlaceGuard Dashboard on http://localhost:8501"
 	PYTHONPATH=$(SRC_DIR) streamlit run $(SRC_DIR)/dashboard/app.py \
-		--server.port 8501 \
-		--theme.base dark
+		--server.port 8501
 
 start-all:		## Start both API and dashboard simultaneously
 	@trap 'kill %1 %2 2>/dev/null; exit' INT; \
